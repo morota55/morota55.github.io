@@ -54,4 +54,5 @@ textarea {
 #message {
     color: green;
     margin-top: 0.5em;
+    font-weight: bold;
 }
