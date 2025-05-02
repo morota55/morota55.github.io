@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>URL情報取得ツール</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>参考文献形式 出力ツール</h1>
+        <input type="text" id="urlInput" placeholder="URLを入力してください">
+        <button onclick="fetchWebInfo()">情報取得</button>
+        <button onclick="copyToClipboard()">コピー</button>
+        <p id="message"></p>
+        <textarea id="result" readonly></textarea>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
