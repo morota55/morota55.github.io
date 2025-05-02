@@ -14,7 +14,7 @@ async function fetchWebInfo() {
 
     message.textContent = '取得しています...';
     message.style.color = 'black';
-    bottons.forEach(btn => btn.disabled = true); //ボタン無効化
+    buttons.forEach(btn => btn.disabled = true); //ボタン無効化
 
     try {
         const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`);
