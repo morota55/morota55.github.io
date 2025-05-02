@@ -2,6 +2,7 @@ async function fetchWebInfo() {
     const url = document.getElementById('urlInput').value;
     const message = document.getElementById('message');
     const result = document.getElementById('result');
+    const buttons = document.querySelectorAll('button');
 
     message.textContent = '';
     result.value = '';
@@ -41,6 +42,8 @@ async function fetchWebInfo() {
     } catch (e) {
         message.textContent = 'URLにアクセスできませんでした。';
         message.style.color = 'red';
+    } finally {
+        buttons.forEach(btn => btn.disabled = false); //ボタン有効化
     }
 }
 
