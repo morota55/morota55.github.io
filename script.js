@@ -28,12 +28,12 @@ async function fetchWebInfo() {
     message.style.color = 'black';
     buttons.forEach(btn => btn.disabled = true); //ボタン無効化
 
-    const results = [];
-    let successCount = 0;
-    let errorCount = 0;
+    // Calculate access date once for all URLs
+    const today = new Date();
+    const accessDate = `参照日：${today.getFullYear()}年${today.getMonth()+1}月${today.getDate()}日`;
 
-    for (let i = 0; i < urls.length; i++) {
-        const url = urls[i];
+    // Process all URLs concurrently
+    const fetchPromises = urls.map(async (url, i) => {
         try {
             const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`);
             const data = await response.json();
@@ -43,8 +43,6 @@ async function fetchWebInfo() {
             const title = doc.querySelector('title')?.innerText || '';
             const author = doc.querySelector('meta[name="author"]')?.content || '';
             const org = doc.querySelector('meta[property="og:site_name"]')?.content || '';
-            const today = new Date();
-            const accessDate = `参照日：${today.getFullYear()}年${today.getMonth()+1}月${today.getDate()}日`;
 
             const info = [
                 title ? `"${title}"` : '',
@@ -53,13 +51,18 @@ async function fetchWebInfo() {
                 `(${accessDate})`
             ].filter(Boolean).join('，');
 
-            results.push(`[${i + 1}] ${info}`);
-            successCount++;
+            return { index: i, success: true, text: `[${i + 1}] ${info}` };
         } catch (e) {
-            results.push(`[${i + 1}] URLにアクセスできませんでした: ${url}`);
-            errorCount++;
+            return { index: i, success: false, text: `[${i + 1}] URLにアクセスできませんでした: ${url}` };
         }
-    }
+    });
+
+    const fetchResults = await Promise.all(fetchPromises);
+    
+    // Sort by index to maintain order and extract results
+    const results = fetchResults.sort((a, b) => a.index - b.index).map(r => r.text);
+    const successCount = fetchResults.filter(r => r.success).length;
+    const errorCount = fetchResults.filter(r => !r.success).length;
 
     result.value = results.join('\n\n');
     
