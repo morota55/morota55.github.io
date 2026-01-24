@@ -8,7 +8,7 @@
 <body>
     <div class="container">
         <h1>参考文献形式 出力ツール</h1>
-        <input type="text" id="urlInput" placeholder="URLを入力してください">
+        <textarea id="urlInput" placeholder="URLを入力してください（複数の場合は改行で区切ってください）" rows="5"></textarea>
         <button onclick="fetchWebInfo()">情報取得</button>
         <button onclick="copyToClipboard()">コピー</button>
         <p id="message"></p>
