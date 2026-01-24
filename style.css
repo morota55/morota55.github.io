@@ -18,12 +18,14 @@ body {
     text-align: center;
 }
 
-input[type="text"] {
+input[type="text"], #urlInput {
     width: 80%;
     padding: 0.8em;
     margin-bottom: 1em;
     border: 1px solid #ccc;
     border-radius: 8px;
+    font-family: inherit;
+    resize: vertical;
 }
 
 button {
